@@ -1,0 +1,195 @@
+{
+ "seed": 1327,
+ "predictions": {
+  "ml_f1": {
+   "text": "0.85",
+   "time": "11:25:41"
+  },
+  "ml_lr": {
+   "text": "Em đoán lr=0.001 thì đường loss giảm rất chậm và nhìn gần như phẳng vì mỗi lần cập nhật quá nhỏ. Với lr=50, loss có thể dao động mạnh hoặc tăng lên vì bước cập nhật quá lớn, làm mô hình vượt qua điểm tối ưu",
+   "time": "11:26:22"
+  },
+  "dl_curve": {
+   "text": "val loss sẽ giảm ở những epoch đầu, sau đó chững lại hoặc tăng nhẹ do model bắt đầu overfit. F1 của MLP có thể bằng hoặc kém logistic regression vì dữ liệu khá ít và bag-of-words đơn giản, trong khi MLP có nhiều tham số hơn nên dễ học quá khớp.",
+   "time": "11:30:26"
+  },
+  "dl_relu": {
+   "text": "Em đoán F1 sẽ giảm nhẹ hoặc gần bằng logistic regression vì mô hình không còn học được các quan hệ phi tuyến giữa các từ.",
+   "time": "11:43:34"
+  },
+  "emb_search": {
+   "text": "Kết quả gần nhất sẽ là spam. Dù truy vấn không có các từ như 'free', 'win' hay 'prize', embedding vẫn có thể nhận ra ý nghĩa của câu giống với các tin nhắn quảng cáo hoặc dụ người nhận thực hiện hành động. ",
+   "time": "11:51:55"
+  },
+  "emb_tricky": {
+   "text": "Em đoán Encoder + LogReg sẽ đúng nhiều hơn vì embedding dựa vào ý nghĩa của cả câu, không chỉ nhìn các từ khóa riêng lẻ. Vì vậy model có thể nhận ra spam đang né từ khóa và ít bị đánh lừa hơn khi một tin ham chỉ đang nhắc đến các từ như 'free' hoặc 'prize'.",
+   "time": "11:53:43"
+  },
+  "llm_models": {
+   "text": "Em đoán Gemini 3.8 Flash sẽ có F1 cao hơn Gemini 3.5 Flash-Lite khoảng 0.05. Model lớn đắt khoảng 2.5 lần vì phần lớn token là input. Em nghĩ LLM có thể ngang hoặc nhỉnh hơn 3b một chút, nhưng chưa chắc thắng rõ vì tập SUB chỉ có 40 tin",
+   "time": "12:54:19"
+  },
+  "llm_fewshot": {
+   "text": "F1 sẽ tăng nhẹ hoặc gần như không đổi vì 4 ví dụ giúp model hiểu cách phân loại rõ hơn. Chi phí mỗi tin có thể tăng khoảng 2–3 lần do prompt phải gửi thêm nội dung của 4 ví d",
+   "time": "13:49:27"
+  },
+  "tradeoff": {
+   "text": "Em đoán BoW + Logistic Regression sẽ nằm trên đường Pareto vì chạy nhanh và kết quả khá tốt. Các model embedding và LLM có thể có F1 cao hơn nhưng chậm hơn nhiều.Những cách dùng embedding và LLM có khả năng nằm bên phải vạch SLA 50 ms, vì cần tạo embedding hoặc gọi API.",
+   "time": "15:31:50"
+  },
+  "hard_eval": {
+   "text": "BoW có thể chỉ khoảng 70–80% vì dễ bị các từ viết tắt, che chữ và câu có từ khóa spam. LLM có thể khoảng 80–90% vì hiểu ngữ cảnh tốt hơn.   Em nghĩ BoW khó nhất ở nhóm obfuscation, vì từ spam bị viết biến dạng. LLM khó nhất ở prompt_injection, vì nội dung có thể cố làm model bỏ qua yêu cầu phân loại.",
+   "time": "15:35:46"
+  }
+ },
+ "checks": {
+  "1.1 vectorize": true,
+  "1.2 sigmoid / predict_proba": true,
+  "1.3 train_logreg": true,
+  "1.4 metrics": true,
+  "2.1 build_mlp": true,
+  "2.2 train_mlp": true,
+  "3.1–3.2 cosine / top_k_similar": true,
+  "3.3 knn_predict": true,
+  "4.2–4.3 prompt / parse_label": true,
+  "4.1 + 4.4 call_openai / llm_classify_batch": true,
+  "tính tay: baseline_accuracy": true,
+  "tính tay: sigmoid_0": true,
+  "tính tay: f1_example": true,
+  "tính tay: cosine_example": true,
+  "tính tay: llm_cost_per_day": true
+ },
+ "experiments": [
+  {
+   "key": "ml_f1",
+   "time": "11:25:46"
+  },
+  {
+   "key": "ml_lr",
+   "time": "11:26:23"
+  },
+  {
+   "key": "dl_curve",
+   "time": "11:30:28"
+  },
+  {
+   "key": "dl_relu",
+   "time": "11:43:36"
+  },
+  {
+   "key": "emb_search",
+   "time": "11:51:56"
+  },
+  {
+   "key": "emb_tricky",
+   "time": "11:53:43"
+  },
+  {
+   "key": "llm_models",
+   "time": "11:53:51"
+  },
+  {
+   "key": "llm_models",
+   "time": "12:54:20"
+  },
+  {
+   "key": "llm_fewshot",
+   "time": "13:49:28"
+  },
+  {
+   "key": "tradeoff",
+   "time": "15:31:56"
+  },
+  {
+   "key": "hard_eval",
+   "time": "15:35:53"
+  }
+ ],
+ "challenge": 1,
+ "results": {
+  "1. BoW + LogReg (tự code)": {
+   "accuracy": 0.9780645161290322,
+   "precision": 1.0,
+   "recall": 0.8316831683168316,
+   "f1": 0.9081081081081082,
+   "f1_SUB": 0.9743589743589743,
+   "train_s": 3.62850646600009,
+   "msg_per_s": 44216.63526806305,
+   "p50_ms": 0.049735999994027225,
+   "p95_ms": 0.08788604998812838,
+   "usd_per_1k": 0.0
+  },
+  "2. BoW + MLP (deep learning)": {
+   "accuracy": 0.984516129032258,
+   "precision": 0.978494623655914,
+   "recall": 0.900990099009901,
+   "f1": 0.9381443298969072,
+   "f1_SUB": 1.0,
+   "train_s": 5.7299816449999526,
+   "msg_per_s": 43940.23108026652,
+   "p50_ms": 0.16863749999629363,
+   "p95_ms": 0.27806464995592234,
+   "usd_per_1k": 0.0
+  },
+  "3a. Encoder (MiniLM) + kNN": {
+   "accuracy": 0.9819354838709677,
+   "precision": 0.8849557522123894,
+   "recall": 0.9900990099009901,
+   "f1": 0.9345794392523366,
+   "f1_SUB": 1.0,
+   "train_s": 89.81076695499996,
+   "msg_per_s": 20.022448892742894,
+   "p50_ms": 56.1143180000272,
+   "p95_ms": 79.04407359981168,
+   "usd_per_1k": 0.0
+  },
+  "3b. Encoder (MiniLM) + LogReg": {
+   "accuracy": 0.9922580645161291,
+   "precision": 0.9523809523809523,
+   "recall": 0.9900990099009901,
+   "f1": 0.970873786407767,
+   "f1_SUB": 1.0,
+   "train_s": 90.2775587670003,
+   "msg_per_s": 29.09237682258008,
+   "p50_ms": 31.481953500133386,
+   "p95_ms": 48.6874349998061,
+   "usd_per_1k": 0.0
+  },
+  "3c. Encoder (MiniLM) + MLP head": {
+   "accuracy": 0.9909677419354839,
+   "precision": 0.9607843137254902,
+   "recall": 0.9702970297029703,
+   "f1": 0.9655172413793103,
+   "f1_SUB": 1.0,
+   "train_s": 90.80596166499981,
+   "msg_per_s": 28.59875981734144,
+   "p50_ms": 30.13382250014729,
+   "p95_ms": 42.50091914989298,
+   "usd_per_1k": 0.0
+  },
+  "4a. LLM nhỏ zero-shot": {
+   "accuracy": 0.95,
+   "precision": 0.95,
+   "recall": 0.95,
+   "f1": 0.9500000000000001,
+   "f1_SUB": 0.9500000000000001,
+   "train_s": 0.0,
+   "msg_per_s": 0.7411477208614318,
+   "p50_ms": 784.3983749999097,
+   "p95_ms": 3457.1188814997154,
+   "usd_per_1k": 0.01777333333333334
+  },
+  "4c. LLM nhỏ few-shot": {
+   "accuracy": 0.975,
+   "precision": 0.9523809523809523,
+   "recall": 1.0,
+   "f1": 0.975609756097561,
+   "f1_SUB": 0.975609756097561,
+   "train_s": 0.0,
+   "msg_per_s": 0.9591166376170253,
+   "p50_ms": 713.7251229996764,
+   "p95_ms": 2523.023810299582,
+   "usd_per_1k": 0.04857333333333332
+  }
+ }
+}
